@@ -35,7 +35,7 @@ def CreateDatabase():
             "identifier",
             "formula",
             "data.properties.optical.bandgaps.GGA",
-            "data.properties.optical.type",           # 👈 agregar este
+            "data.properties.optical.type",           
             "data.properties.other.synthesized",
             "data.properties.chemical.sigma"
         ]
@@ -45,7 +45,6 @@ def CreateDatabase():
         print("Descargando datos de la API...")
         raw = client.query_contributions(fields=fields, paginate=True)
 
-        # 👇 Aquí está el cambio importante
         # "raw" es un diccionario con "total_count" y "data"
         # lo que quieres está dentro de "data"
         data = raw["data"] if "data" in raw else raw  
@@ -66,14 +65,14 @@ def CreateDatabase():
             df_sint.to_excel("materiales_propiedades_sintetizables.xlsx", index=False, engine="openpyxl")
             print(f"Base filtrada guardada con {len(df_sint)} registros sintetizables")
         else:
-            print("⚠️ La columna 'data.properties.other.synthesized' no apareció en este batch de datos")
+            print("La columna 'data.properties.other.synthesized' no apareció en este batch de datos")
 
 def FiltrarSintetizables():
 
 
     path = "materiales_propiedades.csv"
     if not os.path.exists(path):
-        print(f"⚠️ No encontré {path}")
+        print(f"No se encontro {path}")
         return
 
     df = pd.read_csv(path)
@@ -85,7 +84,7 @@ def FiltrarSintetizables():
     # Verifica columnas esenciales
     missing = [c for c in [synth_col, bandgap_val_col, tipo_col] if c not in df.columns]
     if missing:
-        print("⚠️ Faltan columnas necesarias:", missing)
+        print("Faltan columnas necesarias:", missing)
         print("Columnas disponibles:", df.columns.tolist())
         return
 
@@ -108,5 +107,5 @@ def FiltrarSintetizables():
     df_final.to_csv("materiales_filtrados.csv", index=False)
     df_final.to_excel("materiales_filtrados.xlsx", index=False, engine="openpyxl")
 
-    print(f"✅ Base final guardada con {len(df_final)} registros sintetizables, bandgap 1–1.8 eV y tipo 'da'")
+    print(f"Base final guardada con {len(df_final)} registros sintetizables, bandgap 1–1.8 eV y tipo 'da'")
 
