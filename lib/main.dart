@@ -34,18 +34,31 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-//hola mudo xd
-
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(children: [
+      backgroundColor: const Color.fromARGB(255, 252, 227, 146),
+      body: Stack(
+        children: [
+          // Logo arriba a la izquierda
+          Positioned(
+            top: 40,
+            left: 10,
+            child: Image.asset(
+              'assets/logo.png',
+              width: MediaQuery.of(context).size.width * 0.2,
+              height: MediaQuery.of(context).size.height * 0.1,
+              fit: BoxFit.contain,
+            ),
+          ),
+
+          // Contenido central
           Center(
             child: Column(
               children: [
-                SizedBox(height: 15),
-                Spacer(flex: 30),
+                const SizedBox(height: 15),
+                const Spacer(flex: 30),
                 Text(
                   'Materials: Forbbiden Transitions',
                   style: GoogleFonts.orbitron(
@@ -53,39 +66,59 @@ class _MyHomePageState extends State<MyHomePage> {
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 2
-                        ..color = Color.fromARGB(255, 10, 1, 1),
-                      fontSize: MediaQuery.of(context).size.width * 0.05, // 8% del ancho
+                        ..color = const Color.fromARGB(255, 10, 1, 1),
+                      fontSize: MediaQuery.of(context).size.width * 0.05,
                     ),
                   ),
-                  textAlign: TextAlign.center, // Centrado si se parte en varias líneas
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MymainApp(
-                                    title: '',
-                                  )));
-                    },
-                    // ignore: sort_child_properties_last
-                    child: Text(
-                      'Start',
-                      style: GoogleFonts.orbitron(
-                          textStyle: TextStyle(fontSize: 15)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MymainApp(title: ''),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 100, vertical: 30),
+                    backgroundColor:
+                        const Color.fromARGB(255, 255, 221, 149),
+                  ),
+                  child: Text(
+                    'Start',
+                    style: GoogleFonts.orbitron(
+                      textStyle: const TextStyle(fontSize: 15),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 100, vertical: 30))),
-                SizedBox(height: 15),
-                Spacer(flex: 30),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Spacer(flex: 30),
               ],
             ),
-          )
-        ]),
-        backgroundColor: Color.fromARGB(255, 252, 227, 146));
+          ),
+
+          // Firma en la esquina inferior derecha
+          Positioned(
+            right: 10,
+            bottom: 10,
+            child: Text(
+              'Made by: Daniel Silva',
+              style: GoogleFonts.orbitron(
+                textStyle: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.black54,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

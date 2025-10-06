@@ -68,11 +68,9 @@ def CreateDatabase():
             print("La columna 'data.properties.other.synthesized' no apareció en este batch de datos")
 
 def FiltrarSintetizables():
-
-
     path = "materiales_propiedades.csv"
     if not os.path.exists(path):
-        print(f"No se encontro {path}")
+        print(f"No se encontró {path}")
         return
 
     df = pd.read_csv(path)
@@ -88,24 +86,24 @@ def FiltrarSintetizables():
         print("Columnas disponibles:", df.columns.tolist())
         return
 
-    # 1) Filtrar sintetizables
+    # filtrar sintetizables
     synth_vals = df[synth_col].fillna("").astype(str).str.strip().str.lower()
     synth_mask = synth_vals.isin(["yes", "si", "true", "1", "y"])
 
-    # 2) Filtrar bandgap en rango 1.0–1.8 eV
+    # Filtrar bandgap en rango 1.0–1.8 eV
     bg = pd.to_numeric(df[bandgap_val_col], errors="coerce")
     bg_mask = bg.ge(1.0) & bg.le(1.8)
 
-    # 3) Filtrar tipo = 'da' (direct allowed)
+    # Filtrar tipo = 'da' (direct allowed)
     tipo_vals = df[tipo_col].fillna("").astype(str).str.strip().str.lower()
     tipo_mask = tipo_vals.eq("da")
 
     # --- Aplicar TODOS los filtros ---
     df_final = df[synth_mask & bg_mask & tipo_mask].copy()
 
-    # Guardar un único archivo
-    df_final.to_csv("materiales_filtrados.csv", index=False)
-    df_final.to_excel("materiales_filtrados.xlsx", index=False, engine="openpyxl")
+    # Guardar solo Excel
+    output_path = "materiales_filtrados.xlsx"
+    df_final.to_excel(output_path, index=False, engine="openpyxl")
 
-    print(f"Base final guardada con {len(df_final)} registros sintetizables, bandgap 1–1.8 eV y tipo 'da'")
-
+    print(f"Base final guardada en '{output_path}' con {len(df_final)} registros sintetizables, "
+          f"bandgap 1–1.8 eV y tipo 'da'")

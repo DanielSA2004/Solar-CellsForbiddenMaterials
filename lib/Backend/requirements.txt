@@ -1,0 +1,6 @@
+openpyxl
+pandas
+mpcontribs.client
+numpy
+matplotlib
+dotenv
