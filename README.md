@@ -1,6 +1,6 @@
-# project_solarscells
+# Project Solarscells
 
-A new Flutter project.
+A new project due to the solar cells investigation, with the purpose of analyzing different solar cells configurations for a precise designing.
 
 ## Getting Started
 
